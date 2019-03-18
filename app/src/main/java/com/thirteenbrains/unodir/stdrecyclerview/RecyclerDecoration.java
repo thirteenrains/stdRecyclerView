@@ -7,20 +7,18 @@ import android.view.View;
 
 public class RecyclerDecoration extends RecyclerView.ItemDecoration {
 
-    private final int verticalSpaceHeight;
+    private final int divHeight;
 
 
-    public RecyclerDecoration(int verticalSpaceHeight) {
-        this.verticalSpaceHeight = verticalSpaceHeight;
+    public RecyclerDecoration(int divHeight) {
+        this.divHeight = divHeight;
     }
 
     @Override
     public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-
-        if (parent.getChildAdapterPosition(view) != parent.getAdapter().getItemCount() - 1) {
-            outRect.bottom = verticalSpaceHeight;
-        }
-
         super.getItemOffsets(outRect, view, parent, state);
+        if (parent.getChildAdapterPosition(view) != parent.getAdapter().getItemCount() - 1)
+            outRect.top = divHeight;
+        outRect.bottom = divHeight;
     }
 }
