@@ -62,12 +62,13 @@ public class MainActivity extends AppCompatActivity implements StdRecyclerAdapte
                 mAdapter.clearSelectedItem();
             }
         });
+
     }
 
     @Override
     public void onItemSelected(View v, int position) {
         StdRecyclerAdapter.StdViewHolder viewHolder = (StdRecyclerAdapter.StdViewHolder)recyclerView.findViewHolderForAdapterPosition(position);
-        Toast.makeText(this, viewHolder.textView.getText().toString(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, viewHolder.textView.getText().toString(), Toast.LENGTH_SHORT).show();
 //        Toast.makeText(this, position + " clicked", Toast.LENGTH_SHORT).show();
     }
 
