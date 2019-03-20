@@ -5,11 +5,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements StdRecyclerAdapter.OnListItemLongSelectedInterface
+        , StdRecyclerAdapter.OnListItemSelectedInterface{
 
     RecyclerView recyclerView;
 
@@ -38,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             dataSet.add("<" + row++ + ">" + "Ruby");
         }
 
-        StdRecyclerAdapter mAdapter = new StdRecyclerAdapter(this);
+        final StdRecyclerAdapter mAdapter = new StdRecyclerAdapter(this, recyclerView, this,this);
         recyclerView.setAdapter(mAdapter);
         mAdapter.setData(dataSet);
 
@@ -50,5 +54,27 @@ public class MainActivity extends AppCompatActivity {
         // 아이템간 공백 추가
         RecyclerDecoration spaceDecoration = new RecyclerDecoration(20);
         recyclerView.addItemDecoration(spaceDecoration);
+
+        Button btnClear = (Button) findViewById(R.id.btnClear);
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAdapter.clearSelectedItem();
+            }
+        });
     }
+
+    @Override
+    public void onItemSelected(View v, int position) {
+        StdRecyclerAdapter.StdViewHolder viewHolder = (StdRecyclerAdapter.StdViewHolder)recyclerView.findViewHolderForAdapterPosition(position);
+        Toast.makeText(this, viewHolder.textView.getText().toString(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, position + " clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onItemLongSelected(View v, int position) {
+        Toast.makeText(this, position + " long clicked", Toast.LENGTH_SHORT).show();
+    }
+
+
 }
