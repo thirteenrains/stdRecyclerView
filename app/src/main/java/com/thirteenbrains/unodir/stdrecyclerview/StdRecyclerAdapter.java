@@ -12,6 +12,9 @@ import java.util.List;
 
 public class StdRecyclerAdapter extends RecyclerView.Adapter<StdRecyclerAdapter.StdViewHolder> {
 
+    public static final int VIEWTYPE_NORMAL = 0;
+    public static final int VIEWTYPE_DETAIL = 1;
+
     public interface OnListItemLongSelectedInterface {
         void onItemLongSelected(View v, int position);
     }
@@ -20,6 +23,19 @@ public class StdRecyclerAdapter extends RecyclerView.Adapter<StdRecyclerAdapter.
         void onItemSelected(View v, int position);
     }
 
+//    public enum ViewType {
+//        NORMAL(0),
+//        DETAIL(1);
+//
+//        private final int value;
+//        ViewType(int value){
+//            this.value = value;
+//        }
+//        public int getValue(){
+//            return this.value;
+//        }
+//    };
+
     private OnListItemSelectedInterface mListener;
     private OnListItemLongSelectedInterface mLongListener;
 
@@ -27,8 +43,9 @@ public class StdRecyclerAdapter extends RecyclerView.Adapter<StdRecyclerAdapter.
     private SparseBooleanArray mSelectedItems = new SparseBooleanArray(0);
 
     Context mContext;
-    List<String> mdata;
+    List<Book> mdata;
     RecyclerView recyclerView;
+    int     mItemViewType;
 
     public StdRecyclerAdapter(Context context
             , RecyclerView recyclerView
@@ -38,18 +55,41 @@ public class StdRecyclerAdapter extends RecyclerView.Adapter<StdRecyclerAdapter.
         this.mListener = listener;
         this.mLongListener = longListener;
         this.recyclerView = recyclerView;
+        this.mItemViewType = VIEWTYPE_NORMAL;
     }
 
-    public void setData(List<String> data) {
+    public void setData(List<Book> data) {
         mdata = data;
         notifyDataSetChanged();
+    }
+
+    public void setItemViewType(int viewType){
+        mItemViewType = viewType;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        //return super.getItemViewType(position);
+        //return mItemViewType.getValue();
+        Log.d("TEST", "getItemViewType =" + mItemViewType);
+        return mItemViewType;
+
     }
 
     @NonNull
     @Override
     public StdViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemView view = new ItemView(mContext);
 
+        ItemView view = null;
+//        if ( ViewType.values()[viewType] == ViewType.NORMAL ){
+        if ( viewType == VIEWTYPE_NORMAL ){
+            view = new ItemView(mContext, R.layout.list_layout_normal);
+            Log.d("TEST", "normal view created");
+        } else   {
+            view = new ItemView(mContext, R.layout.list_layout_detail);
+            Log.d("TEST", "detail view created");
+        }
         StdViewHolder vh = new StdViewHolder(view);
 
         return vh;

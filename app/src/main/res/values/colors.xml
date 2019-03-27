@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="normal_item_bg">#FFFFFFFF</color>
-    <color name="selected_item_bg">#FF0000FF</color>
+    <color name="normal_item_bg">#FFE2F1C3</color>
+    <color name="selected_item_bg">#A3E61B</color>
 
 </resources>
